@@ -53,7 +53,9 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, c);
     }
   }
+ 
 
+ 
 
   printf("Goodbye world\n");
 
