@@ -58,10 +58,10 @@ int main(int argc, char *argv[]) {
 
   loop_delay.tv_sec = 0;
   loop_delay.tv_nsec = 200 * 1000 * 1000;
-  WriteChar(matrix, 0,0,S,0xFFFF);
-  WriteChar(matrix, 10,0,S,0xFFFF);
-  WriteChar(matrix, 20,0,S,0xFFFF);
-  WriteChar(matrix, 30,0,S,0xFFFF);
+  WriteChar(matrix, 200,200,S,0xFFFF);
+  WriteChar(matrix, 2200,200,S,0xFFFF);
+  WriteChar(matrix, 240,0,S,0xFFFF);
+  WriteChar(matrix, 260,0,S,0xFFFF);
   RefreshLCD(mem_base,matrix);
 
   printf("Goodbye world\n");
