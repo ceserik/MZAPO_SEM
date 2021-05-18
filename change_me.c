@@ -9,6 +9,7 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include "LCD_lib.h"
 
 int main(int argc, char *argv[]) {
   unsigned char *mem_base;
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]) {
   unsigned int c;
   
   printf("Hello world\n");
-
+  uint16_t *matrix = (uint16_t*)malloc(sizeof(uint16_t) * 480 * 320);
   sleep(1);
 
   /*
@@ -41,9 +42,26 @@ int main(int argc, char *argv[]) {
   
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
 
+  if (parlcd_mem_base == NULL)
+    exit(1);
+
+  parlcd_hx8357_init(parlcd_mem_base);
+
+  parlcd_write_cmd(parlcd_mem_base, 0x2c);
+  for (i = 0; i < 320 ; i++) {
+    for (j = 0; j < 480 ; j++) {
+      c = 0;
+      parlcd_write_data(parlcd_mem_base, c);
+    }
+  }
+  WriteChar(matrix, 20,0,S,0xF800);
+  WriteChar(matrix, 20,20,S,0xF800);
+  WriteChar(matrix, 20,40,S,0xF800);
+  WriteChar(matrix, 20,60,S,0xF800);
+  RefreshLCD(mem_base,matrix);
 
      clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
-  
+
 
   printf("Goodbye world\n");
 
