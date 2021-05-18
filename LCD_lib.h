@@ -8,6 +8,6 @@ extern uint16_t C[16];
 extern uint16_t O[16];
 
 void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t* c, uint16_t color);
-int RefreshLCD(unsigned char* membase, uint16_t * matrix);
+void RefreshLCD(unsigned char* membase, uint16_t * matrix);
 
 #endif  
