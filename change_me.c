@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
     for (j = 0; j < 480 ; j++) {
       c = 0;
       fb[ptr]=c;
-      parlcd_write_data(parlcd_mem_base, fb[ptr++]);
+      parlcd_write_data(parlcd_mem_base, 0xFFFF);
     }
   }
 
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
     
     parlcd_write_cmd(parlcd_mem_base, 0x2c);
     for (ptr = 0; ptr < 480*320 ; ptr++) {
-        parlcd_write_data(parlcd_mem_base, fb[ptr]);
+        parlcd_write_data(parlcd_mem_base, 0xFFFF);
     }
 
     clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
