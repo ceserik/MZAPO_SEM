@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
   WriteChar(matrix, 20,20,S,0xF800);
   WriteChar(matrix, 20,40,S,0xF800);
   WriteChar(matrix, 20,60,S,0xF800);
-  RefreshLCD(mem_base,matrix);
+  RefreshLCD(parlcd_mem_base,matrix);
 
      clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
 

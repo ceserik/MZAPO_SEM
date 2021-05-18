@@ -92,8 +92,8 @@ void RefreshLCD(unsigned char* membase, uint16_t * matrix){
    for (int y = 0; y < 320; y++){
         for (int x = 0; x < (480); x++)
         {
-            uint16_t c = 0xF800;
-            parlcd_write_data(membase,c );
+            //uint16_t c = 0xF800;
+            parlcd_write_data(membase,matrix[(480*y)+x]);
             //printf("%d ", matrix[(480*y)+x]);
         }
         printf("\n");
