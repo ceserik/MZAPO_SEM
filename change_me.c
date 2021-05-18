@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
   for (i = 0; i < 320 ; i++) {
     for (j = 0; j < 480 ; j++) {
-      c = 0xFFFF;
+      c = 0x0;
       parlcd_write_data(parlcd_mem_base, c);
     }
   }
