@@ -3,8 +3,11 @@
 
 #include <stdint.h>
 
+extern uint16_t S[16];
+extern uint16_t C[16];
+extern uint16_t O[16];
 
-void WriteChar(uint16_t * matrix ,int x, int y,char c);
+void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t* c, uint16_t color);
 
 
 #endif  

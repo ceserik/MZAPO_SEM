@@ -1,0 +1,5 @@
+CC=gcc
+CFLAGS=-I.
+
+hellomake: test.o LCD_lib.o
+	$(CC) -o test test.o LCD_lib.o
