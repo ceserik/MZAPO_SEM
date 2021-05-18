@@ -56,14 +56,14 @@ int main(int argc, char *argv[]) {
   }
 
 
+
+  WriteChar(matrix, 20,0,S,0xF800);
+  WriteChar(matrix, 20,20,S,0xF800);
+  WriteChar(matrix, 20,40,S,0xF800);
+  WriteChar(matrix, 20,60,S,0xF800);
+  RefreshLCD(mem_base,matrix);
   loop_delay.tv_sec = 0;
   loop_delay.tv_nsec = 200 * 1000 * 1000;
-  WriteChar(matrix, 20,0,S,0xFFFF);
-  WriteChar(matrix, 20,20,S,0xFFFF);
-  WriteChar(matrix, 20,40,S,0xFFFF);
-  WriteChar(matrix, 20,60,S,0xFFFF);
-  RefreshLCD(mem_base,matrix);
-
   printf("Goodbye world\n");
 
   return 0;

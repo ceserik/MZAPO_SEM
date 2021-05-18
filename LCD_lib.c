@@ -89,7 +89,7 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
 
 int RefreshLCD(unsigned char* membase, uint16_t * matrix){
     parlcd_write_cmd( membase, 0x2c);
-   for (int y = 0; y < 360; y++)
+   for (int y = 0; y < 100; y++)
     {
         for (int x = 0; x < (480); x++)
         {
