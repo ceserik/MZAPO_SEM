@@ -45,34 +45,16 @@ int main(int argc, char *argv[]) {
     exit(1);
 
   parlcd_hx8357_init(parlcd_mem_base);
-
+  c = 0;
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
   for (i = 0; i < 320 ; i++) {
     for (j = 0; j < 480 ; j++) {
-      c = 0;
+      //c = 0;
       parlcd_write_data(parlcd_mem_base, c);
+      c+=1;
     }
   }
 
-  parlcd_write_cmd(parlcd_mem_base, 0x2c);
-  for (i = 0; i < 320 ; i++) {
-    for (j = 0; j < 480 ; j++) {
-      c = ((i & 0x1f) << 11) | (j & 0x1f);
-      parlcd_write_data(parlcd_mem_base, c);
-    }
-  }
-
-  loop_delay.tv_sec = 0;
-  loop_delay.tv_nsec = 200 * 1000 * 1000;
-  for (k=0; k<60; k++) {
-    
-    parlcd_write_cmd(parlcd_mem_base, 0x2c);
-    for (i = 0; i < 320 ; i++) {
-      for (j = 0; j < 480 ; j++) {
-        c = (((i+k) & 0x1f) << 11) | ((j+k) & 0x1f);
-        parlcd_write_data(parlcd_mem_base, c);
-      }
-    }
 
      clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
   }
