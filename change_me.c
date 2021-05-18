@@ -54,13 +54,24 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  parlcd_write_cmd(parlcd_mem_base, 0x2c);
-  for (i = 0; i < 320 ; i++) {
-    for (j = 0; j < 480 ; j++) {
-      c += 1;// ((i & 0x1f) << 11) | (j & 0x1f);
-      parlcd_write_data(parlcd_mem_base, c);
-    }
-  }
+//  parlcd_write_cmd(parlcd_mem_base, 0x2c);
+//  for (i = 0; i < 320 ; i++) {
+//    for (j = 0; j < 480 ; j++) {
+////      c += 1;// ((i & 0x1f) << 11) | (j & 0x1f);
+//      parlcd_write_data(parlcd_mem_base, c);
+//    }
+//  }
+    parlcd_write_cmd(parlcd_mem_base, 0xB4); // Display cycle
+    parlcd_write_data(parlcd_mem_base, 0x02);
+    parlcd_write_data(parlcd_mem_base, 0x40);
+    parlcd_write_data(parlcd_mem_base, 0x00);
+    parlcd_write_data(parlcd_mem_base, 0x2A);
+    parlcd_write_data(parlcd_mem_base, 0x2A);
+    parlcd_write_data(parlcd_mem_base, 0x0D);
+    parlcd_write_data(parlcd_mem_base, 0x4F);
+
+
+
 /*
   loop_delay.tv_sec = 0;
   loop_delay.tv_nsec = 200 * 1000 * 1000;
