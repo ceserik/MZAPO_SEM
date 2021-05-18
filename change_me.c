@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < 320 ; i++) {
     for (j = 0; j < 480 ; j++) {
       c = ((i & 0x1f) << 11) | (j & 0x1f);
-      parlcd_write_data(parlcd_mem_base, 0x07E0);
+      parlcd_write_data(parlcd_mem_base, 0xFFFF);
     }
   }
 
@@ -69,8 +69,14 @@ int main(int argc, char *argv[]) {
     parlcd_write_cmd(parlcd_mem_base, 0x2c);
     for (i = 0; i < 320 ; i++) {
       for (j = 0; j < 480 ; j++) {
-        c = (((i+k) & 0x1f) << 11) | ((j+k) & 0x1f);
-        parlcd_write_data(parlcd_mem_base, 0x07E0);
+        //c = (((i+k) & 0x1f) << 11) | ((j+k) & 0x1f);
+        if (i % 30 == 0){
+          c = 0x07E0;
+        }
+        else{
+          c = 0x0;
+        }
+        parlcd_write_data(parlcd_mem_base, c);
       }
     }
 
