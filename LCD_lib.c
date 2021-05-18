@@ -89,15 +89,23 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
 
 int RefreshLCD(unsigned char* membase, uint16_t * matrix){
     parlcd_write_cmd( membase, 0x2c);
-   for (int y = 0; y < 360; y++)
+   for (int y = 0; y < 320; y++)
     {
         for (int x = 0; x < (480); x++)
         {
-            parlcd_write_data(membase,0xF800 );
-            printf("%d ", matrix[(480*y)+x]);
+            uint16_t c = 0xFFFF;
+            parlcd_write_data(membase,c );
+            //printf("%d ", matrix[(480*y)+x]);
         }
         printf("\n");
     }
     printf("\n");
     return 1;
 }
+/*
+WriteChar(matrix, 20,0,S,0xF800);
+  WriteChar(matrix, 20,20,S,0xF800);
+  WriteChar(matrix, 20,40,S,0xF800);
+  WriteChar(matrix, 20,60,S,0xF800);
+  RefreshLCD(mem_base,matrix);
+  */

@@ -59,8 +59,7 @@ change_me.o: change_me.c /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/bits/thread-shared-types.h \
  /usr/arm-linux-gnueabihf/include/bits/pthreadtypes-arch.h \
  /usr/arm-linux-gnueabihf/include/bits/struct_mutex.h \
- /usr/arm-linux-gnueabihf/include/bits/struct_rwlock.h mzapo_regs.h \
- LCD_lib.h
+ /usr/arm-linux-gnueabihf/include/bits/struct_rwlock.h mzapo_regs.h
 mzapo_phys.o: mzapo_phys.c /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/sys/types.h \
  /usr/arm-linux-gnueabihf/include/features.h \

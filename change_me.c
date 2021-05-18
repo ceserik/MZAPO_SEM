@@ -9,7 +9,6 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include "LCD_lib.h"
 
 int main(int argc, char *argv[]) {
   unsigned char *mem_base;
@@ -17,7 +16,7 @@ int main(int argc, char *argv[]) {
   uint32_t val_line=5;
   int i,j,k;
   unsigned int c;
-  uint16_t * matrix = (uint16_t*) malloc(480*360*2);
+  
   printf("Hello world\n");
 
   sleep(1);
@@ -27,7 +26,7 @@ int main(int argc, char *argv[]) {
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
   mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
-  
+
   /* If mapping fails exit with error code */
   if (mem_base == NULL)
     exit(1);
@@ -42,28 +41,10 @@ int main(int argc, char *argv[]) {
   
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
 
-  if (parlcd_mem_base == NULL)
-    exit(1);
 
-  parlcd_hx8357_init(parlcd_mem_base);
+     clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+  
 
-  parlcd_write_cmd(parlcd_mem_base, 0x2c);
-  for (i = 0; i < 320 ; i++) {
-    for (j = 0; j < 480 ; j++) {
-      c = 0;
-      parlcd_write_data(parlcd_mem_base, c);
-    }
-  }
-
-
-
-  WriteChar(matrix, 20,0,S,0xF800);
-  WriteChar(matrix, 20,20,S,0xF800);
-  WriteChar(matrix, 20,40,S,0xF800);
-  WriteChar(matrix, 20,60,S,0xF800);
-  RefreshLCD(mem_base,matrix);
-  loop_delay.tv_sec = 0;
-  loop_delay.tv_nsec = 200 * 1000 * 1000;
   printf("Goodbye world\n");
 
   return 0;
