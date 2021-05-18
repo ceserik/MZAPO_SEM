@@ -1,6 +1,7 @@
 #include "LCD_lib.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "mzapo_parlcd.h"
 
 uint16_t S[16] = {
     0x0000,
@@ -83,4 +84,13 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
         printf("\n");
         Xiterable = Xoffset;
     }
+}
+
+
+int RefreshLCD(unsigned char* membase, uint16_t * matrix){
+    parlcd_write_cmd( membase, 0x2c);
+    for (int i = 0; i <172800;++i){
+        parlcd_write_data(membase,matrix[i]);
+    }
+    return 1;
 }
