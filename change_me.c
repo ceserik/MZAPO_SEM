@@ -45,19 +45,15 @@ int main(int argc, char *argv[]) {
     exit(1);
 
   parlcd_hx8357_init(parlcd_mem_base);
-  c = 0;
+
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
   for (i = 0; i < 320 ; i++) {
     for (j = 0; j < 480 ; j++) {
-      //c = 0;
+      c = 0;
       parlcd_write_data(parlcd_mem_base, c);
-      c+=1;
     }
   }
 
-
-     clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
-  }
 
   printf("Goodbye world\n");
 
