@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     for (i = 0; i < 320 ; i++) {
       for (j = 0; j < 480 ; j++) {
         //c = (((i+k) & 0x1f) << 11) | ((j+k) & 0x1f);
-        if (i % 30 == 0){
+        if (i % (30+k) == 0){
           c = 0x07E0;
         }
         else{
