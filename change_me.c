@@ -45,12 +45,23 @@ int main(int argc, char *argv[]) {
   if (parlcd_mem_base == NULL)
     exit(1);
 
+  parlcd_hx8357_init(parlcd_mem_base);
 
+  parlcd_write_cmd(parlcd_mem_base, 0x2c);
+  for (i = 0; i < 320 ; i++) {
+    for (j = 0; j < 480 ; j++) {
+      c = 0;
+      parlcd_write_data(parlcd_mem_base, c);
+    }
+  }
 
 
   loop_delay.tv_sec = 0;
   loop_delay.tv_nsec = 200 * 1000 * 1000;
-  WriteChar(matrix, 50,50,S,0x07E0);
+  WriteChar(matrix, 0,0,S,0xFFFF);
+  WriteChar(matrix, 10,0,S,0xFFFF);
+  WriteChar(matrix, 20,0,S,0xFFFF);
+  WriteChar(matrix, 30,0,S,0xFFFF);
   RefreshLCD(mem_base,matrix);
 
   printf("Goodbye world\n");
