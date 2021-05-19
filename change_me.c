@@ -54,9 +54,9 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, c);
     }
   }
-  WriteChar(matrix, 20,0,S,0xF800,1);
-  WriteChar(matrix, 20,40,C,0xF800,1);
-  WriteChar(matrix, 20,80,O,0xF800,1);
+  WriteChar(matrix, 20,0,S,0xF800,5);
+  WriteChar(matrix, 20,40,C,0xF800,5);
+  WriteChar(matrix, 20,80,O,0xF800,5);
   WriteChar(matrix, 20,120,S,0xF800,1);
   RefreshLCD(parlcd_mem_base,matrix);
 
