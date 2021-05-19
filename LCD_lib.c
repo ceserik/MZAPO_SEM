@@ -3,6 +3,26 @@
 #include "stdlib.h"
 #include "mzapo_parlcd.h"
 
+/* Character S (0x53):
+   ht=16, width=8
+   +--------+
+   |        |
+   |        |
+   | *****  |
+   |**   ** |
+   |**      |
+   |**      |
+   | ***    |
+   |   ***  |
+   |     ** |
+   |     ** |
+   |**   ** |
+   | *****  |
+   |        |
+   |        |
+   |        |
+   |        |
+   +--------+ */
 uint16_t S[16] = {
     0x0000,
     0x0000,
@@ -21,6 +41,7 @@ uint16_t S[16] = {
     0x0000,
     0x0000,
 };
+
 
 uint16_t C[16] = {
     0x0000,
@@ -61,29 +82,41 @@ uint16_t O[16] = {
     0x0000,
 };
 
-void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t color)
+void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t color, int size)
 {
 
     int Xiterable = Xoffset;
+    int TemplateRow = 0;
+    int LastY = 0;
     //printf("aj idem");
-    for (int Ycounter = 0; Ycounter < 16; ++Ycounter)
+    for (int Ycounter = 0; Ycounter < (size* 16); ++Ycounter)
     {
         for (int Xcounter = 0; Xcounter < 8; ++Xcounter)
         {
-
-            if ((S[Ycounter] << Xcounter) & 0b1000000000000000)
+            if (Ycounter - LastY == size){
+                TemplateRow +=1;
+                LastY = Ycounter;
+            }
+            //fprintf(stdout,"Teplate = %d Ycounter = %d  LastY = %d\n",TemplateRow,Ycounter,LastY);
+            if ((S[TemplateRow] << Xcounter) & 0b1000000000000000)
             {
-                printf("%d ", c[Ycounter] << (Xcounter));
-                int nextPos = ((Ycounter + Yoffset) * 480) + Xiterable;
+                
+                for(int width = 0; width < size; ++width){
+                    //printf("%d ", c[Ycounter] << (Xcounter));
+                    int nextPos = ((Ycounter + Yoffset) * 480) + Xiterable + width;
+                    matrix[nextPos] = color;
+                    
+                }
 
-                matrix[nextPos] = color;
                 //printf("farbim");
             }
-            Xiterable += 1;
+            Xiterable += 1 +size;
         }
-        printf("\n");
+        //printf("\n");
         Xiterable = Xoffset;
+        
     }
+    //TemplateRow = 0;
 }
 
 
@@ -100,10 +133,3 @@ void RefreshLCD(unsigned char* membase, uint16_t * matrix){
     }
     printf("\n");
 }
-/*
-WriteChar(matrix, 20,0,S,0xF800);
-  WriteChar(matrix, 20,20,S,0xF800);
-  WriteChar(matrix, 20,40,S,0xF800);
-  WriteChar(matrix, 20,60,S,0xF800);
-  RefreshLCD(mem_base,matrix);
-  */
