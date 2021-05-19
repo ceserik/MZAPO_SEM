@@ -98,7 +98,7 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
                 LastY = Ycounter;
             }
             //fprintf(stdout,"Teplate = %d Ycounter = %d  LastY = %d\n",TemplateRow,Ycounter,LastY);
-            if ((S[TemplateRow] << Xcounter) & 0b1000000000000000)
+            if ((c[TemplateRow] << Xcounter) & 0b1000000000000000)
             {
                 
                 for(int width = 0; width < size; ++width){
