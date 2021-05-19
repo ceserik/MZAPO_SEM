@@ -54,10 +54,10 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, c);
     }
   }
-  WriteChar(matrix, 20,0,S,0xF800,10);
-  WriteChar(matrix, 20,40,C,0xF800,10);
-  WriteChar(matrix, 20,80,O,0xF800,10);
-  WriteChar(matrix, 20,120,S,0xF800,1);
+  WriteChar(matrix, 0,0,S,0xF800,10);
+  WriteChar(matrix, 100,40,C,0xF800,10);
+  WriteChar(matrix, 200,80,O,0xF800,10);
+  WriteChar(matrix, 300,300,S,0xF800,1);
   RefreshLCD(parlcd_mem_base,matrix);
 
      clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
