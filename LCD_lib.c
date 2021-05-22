@@ -101,7 +101,7 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
             if ((c[TemplateRow] << Xcounter) & 0b1000000000000000)
             {
                 
-                for(int width = 0; width < size; ++width){
+                for(int width = 0; width <= size; ++width){
                     //printf("%d ", c[Ycounter] << (Xcounter));
                     int nextPos = ((Ycounter + Yoffset) * 480) + Xiterable + width;
                     matrix[nextPos] = color;
@@ -118,6 +118,26 @@ void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_
     }
     //TemplateRow = 0;
 }
+
+
+void WriteLineHorizon(uint16_t* matrix, int x, int y, uint16_t color, int size, int length){
+        for(int Yoffset = 0; Yoffset < size; Yoffset++){
+            for (int Xoffset = 0; Xoffset < length; Xoffset++){
+                int nextPos = ((y + Yoffset) * 480) + x + Xoffset;
+                matrix[nextPos] = color;
+            }
+        }
+}
+void WriteLineVert(uint16_t* matrix, int x, int y, uint16_t color, int size, int length){
+        for(int Xoffset = 0; Xoffset < size; Xoffset++){
+            for (int Yoffset = 0; Yoffset < length; Yoffset++){
+                int nextPos = ((y + Yoffset) * 480) + x + Xoffset;
+                matrix[nextPos] = color;
+            }
+        }
+}
+
+
 
 
 void RefreshLCD(unsigned char* membase, uint16_t * matrix){
