@@ -179,6 +179,24 @@ uint16_t F[16]={
 0x0000,
 0x0000,
 };
+uint16_t T[16]={
+    0x0000,
+0x0000,
+0x7e00,
+0x5a00,
+0x1800,
+0x1800,
+0x1800,
+0x1800,
+0x1800,
+0x1800,
+0x1800,
+0x3c00,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+};
 
 void WriteChar(uint16_t * matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t color, int size)
 {
@@ -251,3 +269,5 @@ void RefreshLCD(unsigned char* membase, uint16_t * matrix){
     }
     //printf("\n");
 }
+
+void WriteString()

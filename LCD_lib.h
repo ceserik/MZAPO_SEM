@@ -12,7 +12,7 @@ extern uint16_t O[16];
 extern uint16_t Equal[16];
 extern uint16_t I[16];
 extern uint16_t F[16];
-//extern uint16_t O[16];
+extern uint16_t T[16];
 //extern uint16_t O[16];
 //extern uint16_t O[16];
 //extern uint16_t O[16];

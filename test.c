@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "LCD_lib.h"
 #include "font_types.h"
+#include <math.h>
 
 
 int saveBmp(FILE* file, unsigned short * matrix);
@@ -46,17 +47,17 @@ void WriteDefault(unsigned short * matrix){
     WriteChar(matrix, 10+(3*(size+1)*8), 0, E, 0x07E0,size);
     WriteChar(matrix, 10+(4*(size+1)*8), 0, D, 0x07E0,size);
     WriteChar(matrix, 10+(6*(size+1)*8), 0, Equal, 0x07E0,size);
-    // SET=
+    // SET =
      WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
-     WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
-     WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
-     WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
+     WriteChar(matrix, 10+(1*(size+1)*8), (1*(size+1)*16), E, 0x07E0,size);
+     WriteChar(matrix, 10+(2*(size+1)*8), (1*(size+1)*16), T, 0x07E0,size);
+     WriteChar(matrix, 10+(4*(size+1)*8), (1*(size+1)*16), Equal, 0x07E0,size);
     //DIFF
     WriteChar(matrix, 10 + (0*(size+1)*8), (2*(size+1)*16), D, 0x07E0, size );
     WriteChar(matrix, 10+(1*(size+1)*8), (2*(size+1)*16), I, 0x07E0, size);
     WriteChar(matrix, 10+(2*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
     WriteChar(matrix, 10+(3*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
-    WriteChar(matrix, 10+(4*(size+1)*8), (2*(size+1)*16), Equal, 0x07E0, size);
+    WriteChar(matrix, 10+(5*(size+1)*8), (2*(size+1)*16), Equal, 0x07E0, size);
 
 
     // P=
@@ -80,9 +81,12 @@ int saveBmp(FILE* outfile, unsigned short * matrix){
     int length = 320*480;
     for (int i = 0; i < length; i++){
         
-        uint8_t R = matrix[i]<<11;
-        uint8_t G = matrix[i]<<6;
-        uint8_t B = matrix[i]<<1;
+        uint8_t R = (matrix[i]<<11);
+        uint8_t G = (matrix[i]<<6);
+        uint8_t B = (matrix[i]<<1) ;
+        //uint8_t R8 = (int) floor( R * 255.0 / 31.0 + 0.5);
+        //uint8_t G8 = (int) floor( G * 255.0 / 63.0 + 0.5);
+        //uint8_t B8 = (int) floor( B/ 31.0 + 0.5);
         fputc(R, outfile);
         fputc(G,outfile);
         fputc(B,outfile);
