@@ -10,7 +10,7 @@ LDFLAGS = -lrt -lpthread
 SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c LCD_lib.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = change_me
-TARGET_IP ?= 10.30.110.74
+TARGET_IP ?= 147.32.107.125
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
@@ -69,7 +69,7 @@ clean:
 	rm -f *.o *.a $(OBJECTS) $(TARGET_EXE) connect.gdb depend
 
 copy-executable: $(TARGET_EXE)
-	sudossh $(SSH_OPTIONS) -t $(TARGET_USER)@$(TARGET_IP) killall gdbserver 1>/dev/null 2>/dev/null || true
+	sudo ssh $(SSH_OPTIONS) -t $(TARGET_USER)@$(TARGET_IP) killall gdbserver 1>/dev/null 2>/dev/null || true
 	sudo ssh $(SSH_OPTIONS) $(TARGET_USER)@$(TARGET_IP) mkdir -p $(TARGET_DIR)
 	sudo scp $(SSH_OPTIONS) $(TARGET_EXE) $(TARGET_USER)@$(TARGET_IP):$(TARGET_DIR)/$(TARGET_EXE)
 

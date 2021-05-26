@@ -53,14 +53,16 @@ change_me.o: change_me.c /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/bits/getopt_posix.h \
  /usr/arm-linux-gnueabihf/include/bits/getopt_core.h \
  /usr/arm-linux-gnueabihf/include/bits/unistd.h \
- /usr/arm-linux-gnueabihf/include/bits/unistd_ext.h mzapo_parlcd.h \
+ /usr/arm-linux-gnueabihf/include/bits/unistd_ext.h \
+ /usr/arm-linux-gnueabihf/include/string.h \
+ /usr/arm-linux-gnueabihf/include/bits/string_fortified.h mzapo_parlcd.h \
  mzapo_phys.h /usr/arm-linux-gnueabihf/include/sys/types.h \
  /usr/arm-linux-gnueabihf/include/bits/pthreadtypes.h \
  /usr/arm-linux-gnueabihf/include/bits/thread-shared-types.h \
  /usr/arm-linux-gnueabihf/include/bits/pthreadtypes-arch.h \
  /usr/arm-linux-gnueabihf/include/bits/struct_mutex.h \
  /usr/arm-linux-gnueabihf/include/bits/struct_rwlock.h mzapo_regs.h \
- font_types.h
+ LCD_lib.h
 mzapo_phys.o: mzapo_phys.c /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/sys/types.h \
  /usr/arm-linux-gnueabihf/include/features.h \

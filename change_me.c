@@ -5,10 +5,18 @@
 #include <stdint.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include "LCD_lib.h"
+
+int saveBmp(FILE* file, unsigned short * matrix);
+void WriteDefault(unsigned short * matrix);
+void WriteVal(uint16_t* matrix, int num[3],int x, int y, int size, int color );
+int letterSize = 3;
+
 
 int main(int argc, char *argv[]) {
   unsigned char *mem_base;
@@ -18,7 +26,8 @@ int main(int argc, char *argv[]) {
   unsigned int c;
   
   printf("Hello world\n");
-
+  uint16_t *matrix = (uint16_t*)malloc(sizeof(uint16_t) * 480 * 320);
+  memset(matrix,255,320*480*2);
   sleep(1);
 
   /*
@@ -30,6 +39,8 @@ int main(int argc, char *argv[]) {
   /* If mapping fails exit with error code */
   if (mem_base == NULL)
     exit(1);
+
+
 
   struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
   for (i=0; i<30; i++) {
@@ -49,35 +60,66 @@ int main(int argc, char *argv[]) {
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
   for (i = 0; i < 320 ; i++) {
     for (j = 0; j < 480 ; j++) {
-      c = 0;
-      parlcd_write_data(parlcd_mem_base, c);
+      c = 0x0;
+      //parlcd_write_data(parlcd_mem_base, c);
+      matrix[i*480+j]=c;
     }
   }
+    WriteDefault(matrix);
+    int n[3] = {4,2,0};
+    WriteVal(matrix, n,10+(6*(letterSize+1)*8),0,3,0xFFFF);// SPEED VAL
+    int x[3] = {0,6,9};
+    WriteVal(matrix, x,10+(4*(letterSize+1)*8), (1*(letterSize + 1)*16),3,0xFFFF);// SPEED VAL
 
-  parlcd_write_cmd(parlcd_mem_base, 0x2c);
-  for (i = 0; i < 320 ; i++) {
-    for (j = 0; j < 480 ; j++) {
-      c = ((i & 0x1f) << 11) | (j & 0x1f);
-      parlcd_write_data(parlcd_mem_base, c);
-    }
-  }
 
-  loop_delay.tv_sec = 0;
-  loop_delay.tv_nsec = 200 * 1000 * 1000;
-  for (k=0; k<60; k++) {
-    
-    parlcd_write_cmd(parlcd_mem_base, 0x2c);
-    for (i = 0; i < 320 ; i++) {
-      for (j = 0; j < 480 ; j++) {
-        c = (((i+k) & 0x1f) << 11) | ((j+k) & 0x1f);
-        parlcd_write_data(parlcd_mem_base, c);
-      }
-    }
+  //WriteChar(matrix, 200,200,S,0xF800,4);
+  //WriteChar(matrix, 100,40,C,0xF800,10);
+  //WriteChar(matrix, 200,80,O,0xF800,10);
+  //WriteChar(matrix, 300,300,S,0xF800,1);
+  RefreshLCD(parlcd_mem_base,matrix);
 
      clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
-  }
+
 
   printf("Goodbye world\n");
 
   return 0;
+}
+
+void WriteDefault(unsigned short * matrix){
+    WriteLineHorizon(matrix,0,0,0x07E0, 3,480);
+    WriteLineHorizon(matrix,0,317,0x07E0, 3,480);
+    WriteLineVert(matrix,477,0,0x07E0,3,320);
+    WriteLineVert(matrix,0,0,0x07E0,3,320);
+
+    int size = 3;
+    // SPEED=
+    WriteChar(matrix, 10, 0, S, 0x07E0,size);
+    WriteChar(matrix, 10+(1*(size+1)*8), 0, P, 0x07E0,size);
+    WriteChar(matrix, 10+(2*(size+1)*8), 0, E, 0x07E0,size);
+    WriteChar(matrix, 10+(3*(size+1)*8), 0, E, 0x07E0,size);
+    WriteChar(matrix, 10+(4*(size+1)*8), 0, D, 0x07E0,size);
+    WriteChar(matrix, 10+(5*(size+1)*8), 0, Equal, 0x07E0,size);
+    // SET =
+     WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
+     WriteChar(matrix, 10+(1*(size+1)*8), (1*(size+1)*16), E, 0x07E0,size);
+     WriteChar(matrix, 10+(2*(size+1)*8), (1*(size+1)*16), T, 0x07E0,size);
+     WriteChar(matrix, 10+(3*(size+1)*8), (1*(size+1)*16), Equal, 0x07E0,size);
+    //DIFF
+    WriteChar(matrix, 10 + (0*(size+1)*8), (2*(size+1)*16), D, 0x07E0, size );
+    WriteChar(matrix, 10+(1*(size+1)*8), (2*(size+1)*16), I, 0x07E0, size);
+    WriteChar(matrix, 10+(2*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
+    WriteChar(matrix, 10+(3*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
+    WriteChar(matrix, 10+(5*(size+1)*8), (2*(size+1)*16), Equal, 0x07E0, size);
+
+
+    // P=
+    WriteChar(matrix, 10,(3*(size+1)*16),P,0x07E0,size );
+    WriteChar(matrix, 10+(1*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0,size);
+    // I=
+    WriteChar(matrix, 10 + (5*(size+1)*8),(3 * (size+1)*16),I,0x07E0,size );
+    WriteChar(matrix, 10+(6*(size+1)*8), (3 * (size+1)*16), Equal, 0x07E0,size);
+    // D=
+    WriteChar(matrix, 10 + (10*(size+1)*8), (3*(size+1)*16), D, 0x07E0, size );
+    WriteChar(matrix, 10+(11*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0, size);
 }
