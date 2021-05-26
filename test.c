@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "LCD_lib.h"
-#include "font_types.h"
+#include "font.h"
 //#include
 #include <math.h>
 
@@ -29,41 +29,41 @@ int main()
 }
 
 void WriteDefault(unsigned short * matrix){
-    WriteLineHorizon(matrix,0,0,0x07E0, 3,480);
-    WriteLineHorizon(matrix,0,317,0x07E0, 3,480);
-    WriteLineVert(matrix,477,0,0x07E0,3,320);
-    WriteLineVert(matrix,0,0,0x07E0,3,320);
+    write_horizon_line(matrix,0,0,0x07E0, 3,480);
+    write_horizon_line(matrix,0,317,0x07E0, 3,480);
+    write_vert_line(matrix,477,0,0x07E0,3,320);
+    write_vert_line(matrix,0,0,0x07E0,3,320);
 
     int size = 3;
     // SPEED=
-    WriteChar(matrix, 10, 0, S, 0x07E0,size);
-    WriteChar(matrix, 10+(1*(size+1)*8), 0, P, 0x07E0,size);
-    WriteChar(matrix, 10+(2*(size+1)*8), 0, E, 0x07E0,size);
-    WriteChar(matrix, 10+(3*(size+1)*8), 0, E, 0x07E0,size);
-    WriteChar(matrix, 10+(4*(size+1)*8), 0, D, 0x07E0,size);
-    WriteChar(matrix, 10+(5*(size+1)*8), 0, Equal, 0x07E0,size);
+    write_char(matrix, 10, 0, S, 0x07E0,size);
+    write_char(matrix, 10+(1*(size+1)*8), 0, P, 0x07E0,size);
+    write_char(matrix, 10+(2*(size+1)*8), 0, E, 0x07E0,size);
+    write_char(matrix, 10+(3*(size+1)*8), 0, E, 0x07E0,size);
+    write_char(matrix, 10+(4*(size+1)*8), 0, D, 0x07E0,size);
+    write_char(matrix, 10+(5*(size+1)*8), 0, Equal, 0x07E0,size);
     // SET =
-     WriteChar(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
-     WriteChar(matrix, 10+(1*(size+1)*8), (1*(size+1)*16), E, 0x07E0,size);
-     WriteChar(matrix, 10+(2*(size+1)*8), (1*(size+1)*16), T, 0x07E0,size);
-     WriteChar(matrix, 10+(3*(size+1)*8), (1*(size+1)*16), Equal, 0x07E0,size);
+     write_char(matrix, 10+(0*(size+1)*8), (1*(size+1)*16), S, 0x07E0,size);
+     write_char(matrix, 10+(1*(size+1)*8), (1*(size+1)*16), E, 0x07E0,size);
+     write_char(matrix, 10+(2*(size+1)*8), (1*(size+1)*16), T, 0x07E0,size);
+     write_char(matrix, 10+(3*(size+1)*8), (1*(size+1)*16), Equal, 0x07E0,size);
     //DIFF
-    WriteChar(matrix, 10 + (0*(size+1)*8), (2*(size+1)*16), D, 0x07E0, size );
-    WriteChar(matrix, 10+(1*(size+1)*8), (2*(size+1)*16), I, 0x07E0, size);
-    WriteChar(matrix, 10+(2*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
-    WriteChar(matrix, 10+(3*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
-    WriteChar(matrix, 10+(5*(size+1)*8), (2*(size+1)*16), Equal, 0x07E0, size);
+    write_char(matrix, 10 + (0*(size+1)*8), (2*(size+1)*16), D, 0x07E0, size );
+    write_char(matrix, 10+(1*(size+1)*8), (2*(size+1)*16), I, 0x07E0, size);
+    write_char(matrix, 10+(2*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
+    write_char(matrix, 10+(3*(size+1)*8), (2*(size+1)*16), F, 0x07E0, size);
+    write_char(matrix, 10+(5*(size+1)*8), (2*(size+1)*16), Equal, 0x07E0, size);
 
 
     // P=
-    WriteChar(matrix, 10,(3*(size+1)*16),P,0x07E0,size );
-    WriteChar(matrix, 10+(1*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0,size);
+    write_char(matrix, 10,(3*(size+1)*16),P,0x07E0,size );
+    write_char(matrix, 10+(1*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0,size);
     // I=
-    WriteChar(matrix, 10 + (5*(size+1)*8),(3 * (size+1)*16),I,0x07E0,size );
-    WriteChar(matrix, 10+(6*(size+1)*8), (3 * (size+1)*16), Equal, 0x07E0,size);
+    write_char(matrix, 10 + (5*(size+1)*8),(3 * (size+1)*16),I,0x07E0,size );
+    write_char(matrix, 10+(6*(size+1)*8), (3 * (size+1)*16), Equal, 0x07E0,size);
     // D=
-    WriteChar(matrix, 10 + (10*(size+1)*8), (3*(size+1)*16), D, 0x07E0, size );
-    WriteChar(matrix, 10+(11*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0, size);
+    write_char(matrix, 10 + (10*(size+1)*8), (3*(size+1)*16), D, 0x07E0, size );
+    write_char(matrix, 10+(11*(size+1)*8), (3*(size+1)*16), Equal, 0x07E0, size);
 }
 
 

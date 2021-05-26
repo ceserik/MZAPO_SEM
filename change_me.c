@@ -6,12 +6,35 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
+#include <termios.h>
+#include <fcntl.h> 
 
+#include "peripherals.h"
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "LCD_lib.h"
 #include "maps.h"
+#include "font.h"
+
+
+
+void call_termios(int reset)
+{
+   static struct termios tio, tioOld;
+   tcgetattr(STDIN_FILENO, &tio);
+   if (reset) {
+      tcsetattr(STDIN_FILENO, TCSANOW, &tioOld);
+   } else {
+      tioOld = tio; //backup 
+      cfmakeraw(&tio);
+      tio.c_oflag |= OPOST;
+      tcsetattr(STDIN_FILENO, TCSANOW, &tio);
+   }
+}
+
+
+
 
 void WriteDefault(unsigned short *matrix);
 
@@ -19,6 +42,7 @@ int letter_size = 3;
 
 int main(int argc, char *argv[])
 {
+  call_termios(0);
   unsigned char *mem_base;
   unsigned char *parlcd_mem_base;
   uint32_t val_line = 5;
@@ -58,63 +82,45 @@ int main(int argc, char *argv[])
   write_blank(matrix,0,0,480,320);
   welcome_screen (matrix,0x07E1);
   refresh_lcd(parlcd_mem_base, matrix);
+  sleep(1);
+  map2(matrix,0x0);
+  refresh_lcd(parlcd_mem_base,matrix);
 
   
-  //WriteBackground(matrix);
-  
   printf("Goodbye world\n");
-  int a = 0;
-  while (a < 100)
-  {
-    a += 1;
-    uint32_t rgb_knobs_value;
-    rgb_knobs_value = *(volatile uint32_t *)(mem_base + SPILED_REG_KNOBS_8BIT_o);
-    uint8_t green = rgb_knobs_value;
-    
-    WriteVal(matrix, green, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
+  uint32_t a = 1;
+  char input;
+  
+  //setting terminal to raw mode
+  fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
+  struct termios attrs;
+  if (tcgetattr(STDIN_FILENO, &attrs) < 0) {
+    return -1;
+  }
+  cfmakeraw(&attrs);
+  tcsetattr(STDIN_FILENO, TCSANOW, &attrs);
+
+
+  do {
+
+    a *=2;
+    if(a==0){
+      a=1;
+    }
+    input = getchar();
+    write_led_val(mem_base,a);
+    uint8_t blue = get_blue_val(mem_base);
+    uint8_t green = get_green_val(mem_base);
+    uint8_t red = get_red_val(mem_base);
+    write_val(matrix, blue, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
     refresh_lcd(parlcd_mem_base, matrix);
     
-    clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
-    printf("greeeb = %d\n",green);
-    
-  }
+    //printf("greeeb = %d\n",green);
+  } while(input != 'q');
+
+  call_termios(1);
+
+  free(matrix);
   return 0;
 }
 
-void WriteDefault(unsigned short *matrix)
-{
-  WriteLineHorizon(matrix, 0, 0, 0x07E0, 3, 480);
-  WriteLineHorizon(matrix, 0, 317, 0x07E0, 3, 480);
-  WriteLineVert(matrix, 477, 0, 0x07E0, 3, 320);
-  WriteLineVert(matrix, 0, 0, 0x07E0, 3, 320);
-
-  int size = 3;
-  // SPEED=
-  WriteChar(matrix, 10, 0, S, 0x07E0, size);
-  WriteChar(matrix, 10 + (1 * (size + 1) * 8), 0, P, 0x07E0, size);
-  WriteChar(matrix, 10 + (2 * (size + 1) * 8), 0, E, 0x07E0, size);
-  WriteChar(matrix, 10 + (3 * (size + 1) * 8), 0, E, 0x07E0, size);
-  WriteChar(matrix, 10 + (4 * (size + 1) * 8), 0, D, 0x07E0, size);
-  WriteChar(matrix, 10 + (5 * (size + 1) * 8), 0, Equal, 0x07E0, size);
-  // SET =
-  WriteChar(matrix, 10 + (0 * (size + 1) * 8), (1 * (size + 1) * 16), S, 0x07E0, size);
-  WriteChar(matrix, 10 + (1 * (size + 1) * 8), (1 * (size + 1) * 16), E, 0x07E0, size);
-  WriteChar(matrix, 10 + (2 * (size + 1) * 8), (1 * (size + 1) * 16), T, 0x07E0, size);
-  WriteChar(matrix, 10 + (3 * (size + 1) * 8), (1 * (size + 1) * 16), Equal, 0x07E0, size);
-  //DIFF
-  WriteChar(matrix, 10 + (0 * (size + 1) * 8), (2 * (size + 1) * 16), D, 0x07E0, size);
-  WriteChar(matrix, 10 + (1 * (size + 1) * 8), (2 * (size + 1) * 16), I, 0x07E0, size);
-  WriteChar(matrix, 10 + (2 * (size + 1) * 8), (2 * (size + 1) * 16), F, 0x07E0, size);
-  WriteChar(matrix, 10 + (3 * (size + 1) * 8), (2 * (size + 1) * 16), F, 0x07E0, size);
-  WriteChar(matrix, 10 + (5 * (size + 1) * 8), (2 * (size + 1) * 16), Equal, 0x07E0, size);
-
-  // P=
-  WriteChar(matrix, 10, (3 * (size + 1) * 16), P, 0x07E0, size);
-  WriteChar(matrix, 10 + (1 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
-  // I=
-  WriteChar(matrix, 10 + (5 * (size + 1) * 8), (3 * (size + 1) * 16), I, 0x07E0, size);
-  WriteChar(matrix, 10 + (6 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
-  // D=
-  WriteChar(matrix, 10 + (10 * (size + 1) * 8), (3 * (size + 1) * 16), D, 0x07E0, size);
-  WriteChar(matrix, 10 + (11 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
-}
