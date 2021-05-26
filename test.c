@@ -9,7 +9,7 @@
 int saveBmp(FILE* file, unsigned short * matrix);
 void WriteDefault(unsigned short * matrix);
 void WriteVal(uint16_t* matrix, int num[3],int x, int y, int size, int color );
-int letterSize = 3;
+int letter_size = 3;    
 int main()
 {
 
@@ -18,12 +18,12 @@ int main()
 
     WriteDefault(matrix);
     int n[3] = {4,2,0};
-    WriteVal(matrix, n,10+(6*(letterSize+1)*8),0,3,0xFFFF);// SPEED VAL
+    WriteVal(matrix, n,10+(6*(letter_size+1)*8),0,3,0xFFFF);// SPEED VAL
     int x[3] = {0,6,9};
-    WriteVal(matrix, x,10+(4*(letterSize+1)*8), (1*(letterSize + 1)*16),3,0xFFFF);// SPEED VAL
+    WriteVal(matrix, x,10+(4*(letter_size+1)*8), (1*(letter_size + 1)*16),3,0xFFFF);// SPEED VAL
     saveBmp(outfile,matrix);
     fclose(outfile);
-    WriteBlank(matrix,100,100,300,300);
+    write_blank(matrix,100,100,300,300);
     return 0;
    
 }

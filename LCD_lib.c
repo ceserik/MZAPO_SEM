@@ -3,6 +3,19 @@
 #include "stdlib.h"
 #include "mzapo_parlcd.h"
 
+
+
+void WriteBackground(uint16_t* matrix){
+    for (int y = 0; y < 320; y++){
+        for(int x = 0; x < 480 ; x++){
+            int B = 31- x/15;
+            int R = x /15;
+            uint16_t color = B + (R <<11);  
+            matrix[480*y + x] = color;
+        }
+    }
+}
+
 // Writes character to matrix x y are coordiantes of top left corner of character
 void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t color, int size)
 {
@@ -41,7 +54,7 @@ void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t
     //TemplateRow = 0;
 }
 
-void WriteBlank(uint16_t *matrix, int x, int y, int Width, int Heigth ){
+void write_blank(uint16_t *matrix, int x, int y, int Width, int Heigth ){
     
     int StartPos = (480*y) + x;
     int currentPos = StartPos;
@@ -79,7 +92,7 @@ void WriteLineVert(uint16_t *matrix, int x, int y, uint16_t color, int size, int
 // Writes 3 numbers to a row
 void WriteVal(uint16_t *matrix,  uint8_t number, int x, int y, int size, int color)
 {
-    WriteBlank(matrix,x,y+3, (size+1)*8*3, size*16 );
+    write_blank(matrix,x,y+3, (size+1)*8*3, size*16 );
     char num[4];
     if (number < 100 && number >9){
         sprintf(num,"0%d",number);
@@ -137,7 +150,7 @@ void WriteVal(uint16_t *matrix,  uint8_t number, int x, int y, int size, int col
 }
 
 // Writes matrix to LCD
-void RefreshLCD(unsigned char *membase, uint16_t *matrix)
+void refresh_lcd(unsigned char *membase, uint16_t *matrix)
 {
     parlcd_write_cmd(membase, 0x2c);
     for (int y = 0; y < 320; y++)
@@ -148,6 +161,111 @@ void RefreshLCD(unsigned char *membase, uint16_t *matrix)
         }
     }
 }
+
+
+
+uint16_t L[16] = {
+    0x0000,
+0x0000,
+0xf000,
+0x6000,
+0x6000,
+0x6000,
+0x6000,
+0x6000,
+0x6000,
+0x6200,
+0x6600,
+0xfe00,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+};
+uint16_t A[16] = {0x0000,
+0x0000,
+0x3800,
+0x6c00,
+0xc600,
+0xc600,
+0xc600,
+0xfe00,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0x0000,
+0x0000,
+0x0000,
+0x0000,};
+
+uint16_t N[16] = {0x0000,
+0x0000,
+0xc600,
+0xc600,
+0xe600,
+0xe600,
+0xf600,
+0xde00,
+0xce00,
+0xce00,
+0xc600,
+0xc600,
+0x0000,
+0x0000,
+0x0000,
+0x0000,};
+
+
+
+
+
+
+
+
+uint16_t B[16] = {
+0x0000,
+0x0000,
+0xfc00,
+0x6600,
+0x6600,
+0x6600,
+0x7c00,
+0x6600,
+0x6600,
+0x6600,
+0x6600,
+0xfc00,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+};
+
+
+
+uint16_t U [16]={
+0x0000,
+0x0000,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0xc600,
+0x7c00,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+};
+
+
+
+
 uint16_t SPACE[16] = {
 0x0000,
 0x0000,

@@ -11,11 +11,11 @@
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "LCD_lib.h"
+#include "maps.h"
 
-int saveBmp(FILE *file, unsigned short *matrix);
 void WriteDefault(unsigned short *matrix);
 
-int letterSize = 3;
+int letter_size = 3;
 
 int main(int argc, char *argv[])
 {
@@ -55,26 +55,13 @@ int main(int argc, char *argv[])
     exit(1);
 
   parlcd_hx8357_init(parlcd_mem_base);
-
-  parlcd_write_cmd(parlcd_mem_base, 0x2c);
-  for (i = 0; i < 320; i++)
-  {
-    for (j = 0; j < 480; j++)
-    {
-      c = 0x0;
-      //parlcd_write_data(parlcd_mem_base, c);
-      matrix[i * 480 + j] = c;
-    }
-  }
-  WriteDefault(matrix);
-  //int n[3] = {4, 2, 0};
-  //WriteVal(matrix, n, 10 + (6 * (letterSize + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
-  //int x[3] = {0, 6, 9};
-  //WriteVal(matrix, x, 10 + (4 * (letterSize + 1) * 8), (1 * (letterSize + 1) * 16), 3, 0xFFFF); // SPEED VAL
-  RefreshLCD(parlcd_mem_base, matrix);
+  write_blank(matrix,0,0,480,320);
+  welcome_screen (matrix,0x07E1);
+  refresh_lcd(parlcd_mem_base, matrix);
 
   
-
+  //WriteBackground(matrix);
+  
   printf("Goodbye world\n");
   int a = 0;
   while (a < 100)
@@ -84,11 +71,12 @@ int main(int argc, char *argv[])
     rgb_knobs_value = *(volatile uint32_t *)(mem_base + SPILED_REG_KNOBS_8BIT_o);
     uint8_t green = rgb_knobs_value;
     
-    WriteVal(matrix, green, 10 + (6 * (letterSize + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
-    RefreshLCD(parlcd_mem_base, matrix);
-    WriteBlank(matrix,5,5,100,100);
+    WriteVal(matrix, green, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
+    refresh_lcd(parlcd_mem_base, matrix);
+    
     clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
     printf("greeeb = %d\n",green);
+    
   }
   return 0;
 }
