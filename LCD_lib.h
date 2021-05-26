@@ -23,6 +23,7 @@ extern uint16_t seven[16];
 extern uint16_t eight[16];
 extern uint16_t nine[16];
 extern uint16_t zero[16];
+extern uint16_t SPACE[16];
 
 
 void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t* c, uint16_t color,int size);
@@ -30,6 +31,7 @@ void RefreshLCD(unsigned char* membase, uint16_t * matrix);
 void WriteLine(int angle,int x, int y,int size);
 void WriteLineHorizon(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
 void WriteLineVert(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
-void WriteVal(uint16_t* matrix, int num[3],int x, int y, int size, int color);
+void WriteVal(uint16_t *matrix,  uint8_t number, int x, int y, int size, int color);
+void WriteBlank(uint16_t *matrix, int x, int y, int EndX, int EndY );
 
 #endif  

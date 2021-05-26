@@ -23,6 +23,7 @@ int main()
     WriteVal(matrix, x,10+(4*(letterSize+1)*8), (1*(letterSize + 1)*16),3,0xFFFF);// SPEED VAL
     saveBmp(outfile,matrix);
     fclose(outfile);
+    WriteBlank(matrix,100,100,300,300);
     return 0;
    
 }

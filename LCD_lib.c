@@ -41,6 +41,18 @@ void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t
     //TemplateRow = 0;
 }
 
+void WriteBlank(uint16_t *matrix, int x, int y, int Width, int Heigth ){
+    
+    int StartPos = (480*y) + x;
+    int currentPos = StartPos;
+    for(int i = 0; i < Heigth; i++){
+        for (int z = 0; z < Width; z++){
+            matrix[ currentPos + z ] = 0x0;
+        }
+        currentPos += 480;
+    }
+}
+
 void WriteLineHorizon(uint16_t *matrix, int x, int y, uint16_t color, int size, int length)
 {
     for (int Yoffset = 0; Yoffset < size; Yoffset++)
@@ -65,49 +77,61 @@ void WriteLineVert(uint16_t *matrix, int x, int y, uint16_t color, int size, int
 }
 
 // Writes 3 numbers to a row
-void WriteVal(uint16_t *matrix, int num[3], int x, int y, int size, int color)
+void WriteVal(uint16_t *matrix,  uint8_t number, int x, int y, int size, int color)
 {
-
+    WriteBlank(matrix,x,y+3, (size+1)*8*3, size*16 );
+    char num[4];
+    if (number < 100 && number >9){
+        sprintf(num,"0%d",number);
+    }
+    if(number < 10){
+        sprintf(num,"00%d",number);
+    }
+    if(number >=100){
+        sprintf(num,"%d",number);
+    }
     for (int i = 0; i < 3; i++)
     {
         uint16_t *ptr;
         switch (num[i])
         {
-        case 1:
+        case '1':
             ptr = one;
             break;
-        case 2:
+        case '2':
             ptr = two;
             break;
-        case 3:
+        case '3':
             ptr = three;
             break;
-        case 4:
+        case '4':
             ptr = four;
             break;
-        case 5:
+        case '5':
             ptr = five;
             break;
-        case 6:
+        case '6':
             ptr = six;
             break;
-        case 7:
+        case '7':
             ptr = seven;
             break;
-        case 8:
+        case '8':
             ptr = eight;
             break;
-        case 9:
+        case '9':
             ptr = nine;
             break;
-        case 0:
+        case '0':
             ptr = zero;
             break;
 
         default:
+        ptr = SPACE;
             break;
         }
-
+        //WriteChar(matrix, x + (i * (size + 1) * 8), y, SPACE, 0x0, size);
+        //WriteBlank(matrix,x + (i * (size + 1) * 8),y, size*8, size*16 );
         WriteChar(matrix, x + (i * (size + 1) * 8), y, ptr, color, size);
     }
 }
@@ -124,6 +148,25 @@ void RefreshLCD(unsigned char *membase, uint16_t *matrix)
         }
     }
 }
+uint16_t SPACE[16] = {
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+0x0000,
+};
+
 
 uint16_t S[16] = {
     0x0000,
