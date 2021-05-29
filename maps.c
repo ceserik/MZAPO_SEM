@@ -15,7 +15,7 @@ void welcome_screen(uint16_t *matrix,int color){
     int x = 24;
     int y = 0;
     write_background(matrix);
-    clock_nanosleep
+    //clock_nanosleep()
     write_char(matrix,24,100,B,color,size);
     write_char(matrix,24 +(size*9)*1,100,U,color,size);
     write_char(matrix,24 +(size*9)*2,100,L,color,size);
@@ -27,7 +27,7 @@ void welcome_screen(uint16_t *matrix,int color){
     
 }
 
-void map1(uint16_t *matrix, int color)
+void map1(uint16_t *matrix, int color) // Simple map
 {
     write_horizon_line(matrix, 120, 60, color, 20, 120);
     write_vert_line(matrix, 100, 40, color, 20, 60);      
@@ -41,7 +41,7 @@ void map1(uint16_t *matrix, int color)
     write_horizon_line(matrix, 360, 280, color, 20, 20);
 }
 
-void map2(uint16_t *matrix, int color) // DUST 2
+void map2(uint16_t *matrix, int color) // Rendition of Dust 2 from Counter Strike
 {
     write_blank(matrix,0,0,480,320);
     write_horizon_line(matrix, 0, 0, 0xccc4, 3, 480);
@@ -67,42 +67,15 @@ void map2(uint16_t *matrix, int color) // DUST 2
     write_char(matrix, 200, 190, B, 0xF800, 3);
 }
 
-/*
-void WriteDefault(unsigned short *matrix)
-{
-  write_horizon_line(matrix, 0, 0, 0x07E0, 3, 480);
-  write_horizon_line(matrix, 0, 317, 0x07E0, 3, 480);
-  write_vert_line(matrix, 477, 0, 0x07E0, 3, 320);
-  write_vert_line(matrix, 0, 0, 0x07E0, 3, 320);
-
-  int size = 3;
-  // SPEED=
-  write_char(matrix, 10, 0, S, 0x07E0, size);
-  write_char(matrix, 10 + (1 * (size + 1) * 8), 0, P, 0x07E0, size);
-  write_char(matrix, 10 + (2 * (size + 1) * 8), 0, E, 0x07E0, size);
-  write_char(matrix, 10 + (3 * (size + 1) * 8), 0, E, 0x07E0, size);
-  write_char(matrix, 10 + (4 * (size + 1) * 8), 0, D, 0x07E0, size);
-  write_char(matrix, 10 + (5 * (size + 1) * 8), 0, Equal, 0x07E0, size);
-  // SET =
-  write_char(matrix, 10 + (0 * (size + 1) * 8), (1 * (size + 1) * 16), S, 0x07E0, size);
-  write_char(matrix, 10 + (1 * (size + 1) * 8), (1 * (size + 1) * 16), E, 0x07E0, size);
-  write_char(matrix, 10 + (2 * (size + 1) * 8), (1 * (size + 1) * 16), T, 0x07E0, size);
-  write_char(matrix, 10 + (3 * (size + 1) * 8), (1 * (size + 1) * 16), Equal, 0x07E0, size);
-  //DIFF
-  write_char(matrix, 10 + (0 * (size + 1) * 8), (2 * (size + 1) * 16), D, 0x07E0, size);
-  write_char(matrix, 10 + (1 * (size + 1) * 8), (2 * (size + 1) * 16), I, 0x07E0, size);
-  write_char(matrix, 10 + (2 * (size + 1) * 8), (2 * (size + 1) * 16), F, 0x07E0, size);
-  write_char(matrix, 10 + (3 * (size + 1) * 8), (2 * (size + 1) * 16), F, 0x07E0, size);
-  write_char(matrix, 10 + (5 * (size + 1) * 8), (2 * (size + 1) * 16), Equal, 0x07E0, size);
-
-  // P=
-  write_char(matrix, 10, (3 * (size + 1) * 16), P, 0x07E0, size);
-  write_char(matrix, 10 + (1 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
-  // I=
-  write_char(matrix, 10 + (5 * (size + 1) * 8), (3 * (size + 1) * 16), I, 0x07E0, size);
-  write_char(matrix, 10 + (6 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
-  // D=
-  write_char(matrix, 10 + (10 * (size + 1) * 8), (3 * (size + 1) * 16), D, 0x07E0, size);
-  write_char(matrix, 10 + (11 * (size + 1) * 8), (3 * (size + 1) * 16), Equal, 0x07E0, size);
+void end_screen(uint16_t *matrix, int score){
+    int X = 20;
+    int size = 10;
+    write_blank(matrix,0,0,480,320);
+    write_background(matrix);
+    write_val(matrix,score,X + (size * 9)*1,160,size,0xf800,1);
+    write_char(matrix,X,0,S,0xFFFF,size);
+    write_char(matrix,X + (size * 9)*1,0,C,0xFFFF,size);
+    write_char(matrix,X +(size * 9)*2,0,O,0xFFFF,size);
+    write_char(matrix,X +(size * 9)*3,0,R,0xFFFF,size);
+    write_char(matrix,X +(size * 9)*4,0,E,0xFFFF,size);
 }
-*/

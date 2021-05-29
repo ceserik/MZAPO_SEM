@@ -287,33 +287,8 @@ maps.o: maps.c /usr/arm-linux-gnueabihf/include/stdc-predef.h maps.h \
  /usr/arm-linux-gnueabihf/include/bits/stdint-uintn.h LCD_lib.h font.h \
  /usr/arm-linux-gnueabihf/include/stdlib.h \
  /usr/lib/gcc-cross/arm-linux-gnueabihf/9/include/stddef.h \
- /usr/arm-linux-gnueabihf/include/bits/waitflags.h \
- /usr/arm-linux-gnueabihf/include/bits/waitstatus.h \
  /usr/arm-linux-gnueabihf/include/bits/floatn.h \
  /usr/arm-linux-gnueabihf/include/bits/floatn-common.h \
- /usr/arm-linux-gnueabihf/include/sys/types.h \
- /usr/arm-linux-gnueabihf/include/bits/types/clock_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/clockid_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/time_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/timer_t.h \
- /usr/arm-linux-gnueabihf/include/endian.h \
- /usr/arm-linux-gnueabihf/include/bits/endian.h \
- /usr/arm-linux-gnueabihf/include/bits/endianness.h \
- /usr/arm-linux-gnueabihf/include/bits/byteswap.h \
- /usr/arm-linux-gnueabihf/include/bits/uintn-identity.h \
- /usr/arm-linux-gnueabihf/include/sys/select.h \
- /usr/arm-linux-gnueabihf/include/bits/select.h \
- /usr/arm-linux-gnueabihf/include/bits/types/sigset_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/__sigset_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/struct_timeval.h \
- /usr/arm-linux-gnueabihf/include/bits/types/struct_timespec.h \
- /usr/arm-linux-gnueabihf/include/bits/select2.h \
- /usr/arm-linux-gnueabihf/include/bits/pthreadtypes.h \
- /usr/arm-linux-gnueabihf/include/bits/thread-shared-types.h \
- /usr/arm-linux-gnueabihf/include/bits/pthreadtypes-arch.h \
- /usr/arm-linux-gnueabihf/include/bits/struct_mutex.h \
- /usr/arm-linux-gnueabihf/include/bits/struct_rwlock.h \
- /usr/arm-linux-gnueabihf/include/alloca.h \
  /usr/arm-linux-gnueabihf/include/bits/stdlib-bsearch.h \
  /usr/arm-linux-gnueabihf/include/bits/stdlib-float.h \
  /usr/arm-linux-gnueabihf/include/bits/stdlib.h \
@@ -339,10 +314,15 @@ maps.o: maps.c /usr/arm-linux-gnueabihf/include/stdc-predef.h maps.h \
  /usr/arm-linux-gnueabihf/include/bits/unistd_ext.h \
  /usr/arm-linux-gnueabihf/include/time.h \
  /usr/arm-linux-gnueabihf/include/bits/time.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/clock_t.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/time_t.h \
  /usr/arm-linux-gnueabihf/include/bits/types/struct_tm.h \
- /usr/arm-linux-gnueabihf/include/bits/types/struct_itimerspec.h \
- /usr/arm-linux-gnueabihf/include/bits/types/locale_t.h \
- /usr/arm-linux-gnueabihf/include/bits/types/__locale_t.h
+ /usr/arm-linux-gnueabihf/include/bits/types/struct_timespec.h \
+ /usr/arm-linux-gnueabihf/include/bits/endian.h \
+ /usr/arm-linux-gnueabihf/include/bits/endianness.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/clockid_t.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/timer_t.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/struct_itimerspec.h
 font.o: font.c /usr/arm-linux-gnueabihf/include/stdc-predef.h font.h \
  /usr/lib/gcc-cross/arm-linux-gnueabihf/9/include/stdint.h \
  /usr/arm-linux-gnueabihf/include/stdint.h \

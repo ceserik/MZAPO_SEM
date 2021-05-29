@@ -95,9 +95,10 @@ void write_vert_line(uint16_t *matrix, int x, int y, uint16_t color, int size, i
 }
 
 // Writes 3 numbers to a row
-void write_val(uint16_t *matrix, uint8_t number, int x, int y, int size, int color)
+void write_val(uint16_t *matrix, uint8_t number, int x, int y, int size, int color,int transparent)
 {
-    write_blank(matrix, x, y + 3, (size + 1) * 8 * 3, size * 16);
+    if(!transparent)
+        write_blank(matrix, x, y + 3, (size + 1) * 8 * 3, size * 16);
     char num[4];
     if (number < 100 && number > 9)
     {

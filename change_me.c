@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     *(volatile uint32_t *)(mem_base + SPILED_REG_LED_LINE_o) = val_line;
     val_line <<= 1;
     printf("LED val 0x%x\n", val_line);
-    clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+    //clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
   }
 
   if (parlcd_mem_base == NULL)
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
   write_blank(matrix,0,0,480,320);
   welcome_screen (matrix,0x07E1);
   refresh_lcd(parlcd_mem_base, matrix);
-  sleep(1);
+  //sleep(1);
   map2(matrix,0x0);
   refresh_lcd(parlcd_mem_base,matrix);
 
@@ -112,9 +112,13 @@ int main(int argc, char *argv[])
     uint8_t blue = get_blue_val(mem_base);
     uint8_t green = get_green_val(mem_base);
     uint8_t red = get_red_val(mem_base);
-    write_val(matrix, blue, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF); // SPEED VAL
-    refresh_lcd(parlcd_mem_base, matrix);
+    write_val(matrix, blue, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF,0); // SPEED VAL
     
+    
+    if (input == 'e'){
+      end_screen(matrix,5);
+      refresh_lcd(parlcd_mem_base, matrix);
+    }  
     //printf("greeeb = %d\n",green);
   } while(input != 'q');
 

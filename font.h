@@ -29,5 +29,6 @@ extern uint16_t U[16];
 extern uint16_t L[16];
 extern uint16_t A[16];
 extern uint16_t N[16];
+extern uint16_t R[16];
 
 #endif
