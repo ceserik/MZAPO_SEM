@@ -41,7 +41,7 @@ void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t *c, uint16_t
     //TemplateRow = 0;
 }
 
-void WriteLineHorizon(uint16_t *matrix, int x, int y, uint16_t color, int size, int length)
+void write_horizon_line(uint16_t *matrix, int x, int y, uint16_t color, int size, int length)
 {
     for (int Yoffset = 0; Yoffset < size; Yoffset++)
     {
@@ -52,7 +52,8 @@ void WriteLineHorizon(uint16_t *matrix, int x, int y, uint16_t color, int size, 
         }
     }
 }
-void WriteLineVert(uint16_t *matrix, int x, int y, uint16_t color, int size, int length)
+
+void write_vert_line(uint16_t *matrix, int x, int y, uint16_t color, int size, int length)
 {
     for (int Xoffset = 0; Xoffset < size; Xoffset++)
     {
@@ -62,6 +63,38 @@ void WriteLineVert(uint16_t *matrix, int x, int y, uint16_t color, int size, int
             matrix[nextPos] = color;
         }
     }
+}
+
+void write_blank(uint16_t *matrix, int x, int y, int Width, int Heigth ){
+    int StartPos = (480 * y) + x;
+    int currentPos = StartPos;
+    for(int i = 0; i < Heigth; i++){
+        for (int z = 0; z < Width; z++){
+            matrix[currentPos+z] = 0x0;
+        }
+        currentPos += 480;
+    }
+}
+
+void WritePlayerRight(uint16_t *matrix, int x, int y, int w, int h) {
+    write_horizon_line(matrix,x,y,0x07E0, w,h);
+    write_horizon_line(matrix, x+12, y+12, 0x0, 6, 15);
+}
+void WritePlayerDown(uint16_t *matrix, int x, int y, int w, int h) {
+    write_horizon_line(matrix,x,y,0x07E0, w,h);
+    write_horizon_line(matrix, x+12, y+12, 0x0, 15, 6);
+}
+void WritePlayerLeft(uint16_t *matrix, int x, int y, int w, int h) {
+    write_horizon_line(matrix,x,y,0x07E0, w,h);
+    write_horizon_line(matrix, x, y+12, 0x0, 6, 15);
+}
+void WritePlayerUp(uint16_t *matrix, int x, int y, int w, int h) {
+    write_horizon_line(matrix,x,y,0x07E0, w,h);
+    write_horizon_line(matrix, x, y, 0x0, 15, 6);
+}
+
+void render_bullet(uint16_t *matrix, int x, int y, int w, int h) {
+    write_horizon_line(matrix, x, y, 0x74F5, w,h);
 }
 
 // Writes 3 numbers to a row

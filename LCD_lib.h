@@ -28,8 +28,14 @@ extern uint16_t zero[16];
 void WriteChar(uint16_t *matrix, int Xoffset, int Yoffset, uint16_t* c, uint16_t color,int size);
 void RefreshLCD(unsigned char* membase, uint16_t * matrix);
 void WriteLine(int angle,int x, int y,int size);
-void WriteLineHorizon(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
-void WriteLineVert(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
+void write_horizon_line(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
+void write_vert_line(uint16_t* matrix, int x, int y, uint16_t color, int size, int length);
 void WriteVal(uint16_t* matrix, int num[3],int x, int y, int size, int color);
+void write_blank(uint16_t *matrix, int x, int y, int w, int h);
+void WritePlayerRight(uint16_t *matrix, int x, int y, int w, int h);
+void WritePlayerUp(uint16_t *matrix, int x, int y, int w, int h);
+void WritePlayerLeft(uint16_t *matrix, int x, int y, int w, int h);
+void WritePlayerDown(uint16_t *matrix, int x, int y, int w, int h);
+void render_bullet(uint16_t *matrix, int x, int y, int w, int h);
 
 #endif  

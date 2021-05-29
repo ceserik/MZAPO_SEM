@@ -1,13 +1,13 @@
 CC = arm-linux-gnueabihf-gcc
 CXX = arm-linux-gnueabihf-g++
 
-CPPFLAGS = -I .
+CPPFLAGS = -I . -Igame
 CFLAGS =-g -std=gnu99 -O1 -Wall
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 #LDLIBS = -lm
 
-SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c LCD_lib.c player.c
+SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c LCD_lib.c player.c game.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = change_me
 TARGET_IP ?= 147.32.107.125
