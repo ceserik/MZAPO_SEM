@@ -7,15 +7,16 @@ CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 #LDLIBS = -lm
 
-SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c LCD_lib.c player.c game.c
+SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c lcd_lib.c player.c game.c 
+SOURCES += bounds_handler.c key_handler.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = change_me
-TARGET_IP ?= 147.32.107.125
+#TARGET_IP ?= 192.168.202.208
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
-$(warning Run as "TARGET_IP=192.168.202.xxx make run" or modify Makefile)
-#TARGET_IP ?= 192.168.202.xxx
+$(warning Run as "TARGET_IP=192.168.202.207 make run" or modify Makefile)
+TARGET_IP ?= 192.168.202.207
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
@@ -23,8 +24,8 @@ TARGET_USER ?= root
 # for use from Eduroam network use TARGET_IP=localhost and enable next line
 #SSH_OPTIONS=-o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "Port=2222"
 #SSH_GDB_TUNNEL_REQUIRED=y
-SSH_OPTIONS=-i mzapo-root-key
-#SSH_OPTIONS=-o 'ProxyJump=ctu_login@postel.felk.cvut.cz'
+#SSH_OPTIONS=-i mzapo-root-key
+SSH_OPTIONS=-o 'ProxyJump=nemecj41@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
 OBJECTS += $(filter %.o,$(SOURCES:%.cpp=%.o))
@@ -70,7 +71,7 @@ clean:
 
 copy-executable: $(TARGET_EXE)
 	sudo ssh $(SSH_OPTIONS) -t $(TARGET_USER)@$(TARGET_IP) killall gdbserver 1>/dev/null 2>/dev/null || true
-	sudo ssh $(SSH_OPTIONS) $(TARGET_USER)@$(TARGET_IP) mkdir -p $(TARGET_DIR)
+	sudo ssh $(SSH_OPTIONS) $(TARGET_USER)@$(TARGET_IP) sudo mkdir -p $(TARGET_DIR)
 	sudo scp $(SSH_OPTIONS) $(TARGET_EXE) $(TARGET_USER)@$(TARGET_IP):$(TARGET_DIR)/$(TARGET_EXE)
 
 run: copy-executable $(TARGET_EXE)

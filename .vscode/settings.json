@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "lcd_lib.h": "c"
+        "lcd_lib.h": "c",
+        "key_handler.h": "c"
     }
 }
