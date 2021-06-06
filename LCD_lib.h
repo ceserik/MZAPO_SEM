@@ -11,5 +11,6 @@ void write_vert_line(uint16_t* matrix, int x, int y, uint16_t color, int size, i
 void write_val(uint16_t *matrix, uint8_t number, int x, int y, int size, int color,int transparent);
 void write_blank(uint16_t *matrix, int x, int y, int EndX, int EndY );
 void write_background(uint16_t* matrix);
+uint16_t convert_color (uint8_t red, uint8_t  green, uint8_t  blue );
 
 #endif  

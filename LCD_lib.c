@@ -12,7 +12,8 @@ void write_background(uint16_t *matrix)
         {
             int B = 31 - x / 15;
             int R = x / 15;
-            uint16_t color = B + (R << 11);
+            int G = y/10;
+            uint16_t color = B + (R << 11) + (G<<6);
             matrix[480 * y + x] = color;
         }
     }
@@ -167,4 +168,14 @@ void refresh_lcd(unsigned char *membase, uint16_t *matrix)
             parlcd_write_data(membase, matrix[(480 * y) + x]);
         }
     }
+}
+
+
+uint16_t convert_color (uint8_t red, uint8_t  green, uint8_t  blue ){
+    //printf("%d",red);
+    uint8_t red16 = (((uint16_t) red *31 )/256);
+    
+    uint8_t green16 = (((uint16_t) green *63 )/256);
+    uint8_t blue16 = (((uint16_t) blue *31 )/256);
+    return  (uint16_t)blue16 | (uint16_t)green16 <<5 | (uint16_t) red16 <<11;
 }

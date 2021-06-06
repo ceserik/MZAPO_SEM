@@ -6,5 +6,5 @@ uint8_t get_red_val(unsigned char *membase);
 uint8_t get_green_val(unsigned char *membase);
 uint8_t get_blue_val(unsigned char *mem_base);
 void write_led_val(unsigned char *mem_base, uint32_t val_line);
-
+void write_rgb1(unsigned char *mem_base, uint32_t led_val);
 #endif

@@ -44,10 +44,10 @@ void map1(uint16_t *matrix, int color) // Simple map
 void map2(uint16_t *matrix, int color) // Rendition of Dust 2 from Counter Strike
 {
     write_blank(matrix,0,0,480,320);
-    write_horizon_line(matrix, 0, 0, 0xccc4, 3, 480);
-    write_horizon_line(matrix, 0, 317, 0xccc4, 3, 480);
-    write_vert_line(matrix, 477, 0, 0xccc4, 3, 320);
-    write_vert_line(matrix, 0, 0, 0xccc4, 3, 320);
+    write_horizon_line(matrix, 0, 0, 0xccc4, 20, 480);
+    write_horizon_line(matrix, 0, 300, 0xccc4, 20, 480);
+    write_vert_line(matrix, 460, 0, 0xccc4, 20, 320);
+    write_vert_line(matrix, 0, 0, 0xccc4, 20, 320);
     write_horizon_line(matrix, 0, 60, 0xccc4, 20, 40);
     write_horizon_line(matrix, 80, 60, 0xccc4, 20, 180);
     write_horizon_line(matrix, 340, 60, 0xccc4, 20, 140);
@@ -59,7 +59,7 @@ void map2(uint16_t *matrix, int color) // Rendition of Dust 2 from Counter Strik
     write_horizon_line(matrix, 40, 160, 0xEED6, 20, 40);
     write_horizon_line(matrix, 40, 280, 0xEED6, 40, 40);
     //CAR
-    write_horizon_line(matrix, 400, 120, 0xC618, 60, 40);
+    write_horizon_line(matrix, 380, 120, 0xC618, 60, 40);
     //Barrels
     write_horizon_line(matrix, 180, 240, 0x0019, 20, 20); //B
     write_horizon_line(matrix, 200, 240, 0xC800, 20, 20); //R

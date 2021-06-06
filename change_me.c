@@ -33,9 +33,6 @@ void call_termios(int reset)
    }
 }
 
-
-
-
 void WriteDefault(unsigned short *matrix);
 
 int letter_size = 3;
@@ -103,20 +100,53 @@ int main(int argc, char *argv[])
 
   do {
 
-    a *=2;
+    a +=1;
     if(a==0){
       a=1;
     }
+    //right
+    int x = 50;
+    int y = 50;
+    uint16_t color = 0xF800;
+    //right
+    //write_vert_line(matrix,x+10,y+20,0xC618,15,5);
+    //write_vert_line(matrix,x,y,color,15,30);
+    //refresh_lcd
+    //top
+    //write_vert_line(matrix,x,y+15,color,30,15);
+    //write_vert_line(matrix,x+20,y+10,0xc618,5,15);
+    //left
+    //write_vert_line(matrix,x+5,y+5,0xc618,10,5);
+    //write_vert_line(matrix,x+15,y,color,15,30);
+    //down
+    //write_vert_line(matrix,x+5,y+15,0xc618,5,10);
+    //write_vert_line(matrix,x,y,color,30,15);
+
+    
+
+    refresh_lcd(parlcd_mem_base,matrix);
+
     input = getchar();
     write_led_val(mem_base,a);
     uint8_t blue = get_blue_val(mem_base);
     uint8_t green = get_green_val(mem_base);
     uint8_t red = get_red_val(mem_base);
-    write_val(matrix, blue, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF,0); // SPEED VAL
+    uint32_t RGBval = blue;
+    //uint8_t red16 = (((uint16_t) red *31 )/256);
+    //uint8_t green16 = (((uint16_t) green *63 )/256);
+    //uint8_t blue16 = (((uint16_t) blue *31 )/256);
+    RGBval += (uint32_t) green<<8;
+    RGBval += (uint32_t) red <<16;
+    //write_val(matrix, blue, 10 + (6 * (letter_size + 1) * 8), 0, 3, 0xFFFF,0); // SPEED VAL
+    write_rgb1(mem_base,RGBval);
+    //16bit color
     
+
+    uint16_t color16 = convert_color(red,green,blue);
+    write_char(matrix,100,240,S,color16,2);
     
     if (input == 'e'){
-      end_screen(matrix,5);
+      end_screen(matrix,88);
       refresh_lcd(parlcd_mem_base, matrix);
     }  
     //printf("greeeb = %d\n",green);
